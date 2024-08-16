@@ -17,6 +17,13 @@
     "preview": {
       "distribution": "internal"
     },
+    "test": {
+      "distribution": "internal",
+      "channel": "test",
+      "env": {
+        "APP_VARIANT": "test"
+      }
+    },
     "production": {}
   },
   "submit": {
