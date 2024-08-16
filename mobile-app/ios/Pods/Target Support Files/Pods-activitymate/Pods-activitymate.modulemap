@@ -1,0 +1,6 @@
+module Pods_activitymate {
+  umbrella header "Pods-activitymate-umbrella.h"
+
+  export *
+  module * { export * }
+}
