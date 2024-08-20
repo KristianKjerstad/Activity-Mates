@@ -54,8 +54,9 @@ const SignUp = () => {
             .finally(() => {
                 setLoading(false)
                 setEmail("")
-                setPassword("")
                 setName("")
+                setPassword("")
+                router.push("/login")
             })
 
 

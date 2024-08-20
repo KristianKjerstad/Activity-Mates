@@ -6,24 +6,49 @@ import Input from "@/components/Input"
 import { ScreenWrapper } from "@/components/ScreenWrapper"
 import { theme } from "@/constants/theme"
 import { hp, wp } from "@/helpers/common"
+import { supabase } from "@/lib/supabase"
 import { useRouter } from "expo-router"
 import { useRef, useState } from "react"
-import { Pressable, StatusBar, StyleSheet, Text, TextInput, View } from "react-native"
+import { Alert, Pressable, StatusBar, StyleSheet, Text, TextInput, View } from "react-native"
 
 
 const Login = () => {
 
     const router = useRouter()
-    const emailRef = useRef("")
-    const passwordRef = useRef("")
+    const [email, setEmail] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
+
+    const isValidForm = email && password
 
     const mailIcon = <Icon name="mail" width={26} height={26} strokeWidth={1.6} />
     const lockIcon = <Icon name="lock" width={26} height={26} strokeWidth={1.6} />
 
     // TODO use react form and zod for valdiation
-    const onSubmit = () => {
+    const onSubmit = async () => {
+        if (!isValidForm) {
+            Alert.alert("Sign Up", "Please fill in all required fields")
+            return
+        }
 
+        setLoading(true)
+        await supabase.auth.signInWithPassword({
+            email,
+            password
+        })
+            .then((response) => {
+                if (response.error) {
+                    throw new Error(response.error.message)
+                }
+            })
+            .catch((error) => {
+                console.log("error ", error)
+                Alert.alert("Sign Up", error.message)
+            })
+            .finally(() => {
+                setLoading(false)
+
+            })
     }
 
     return <ScreenWrapper>
@@ -37,10 +62,10 @@ const Login = () => {
 
             <View style={styles.form}>
                 <Text style={{ fontSize: hp(1.5), color: theme.colors.text }}>Please log in to continue</Text>
-                <Input icon={mailIcon} placeholder="Enter your email" onChangeText={() => { }} keyboardType="email-address" />
-                <Input icon={lockIcon} secureTextEntry placeholder="Enter your password" onChangeText={() => { }} />
+                <Input icon={mailIcon} value={email} placeholder="Enter your email" onChangeText={(text) => { setEmail(text) }} keyboardType="email-address" />
+                <Input icon={lockIcon} value={password} secureTextEntry placeholder="Enter your password" onChangeText={(text) => { setPassword(text) }} />
                 <Text style={styles.forgotPassword}>Forgot password</Text>
-                <Button title="Log In" loading={loading} onPress={onSubmit} />
+                <Button disabled={!isValidForm} title="Log In" loading={loading} onPress={onSubmit} />
             </View>
 
             <View style={styles.footer}>
