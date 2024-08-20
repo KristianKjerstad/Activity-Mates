@@ -11,10 +11,11 @@ type ButtonProps = {
     onPress: () => void,
     loading?: boolean,
     hasShadow?: boolean
+    disabled?: boolean
 }
 
 
-const Button = ({ buttonStyle, textStyle, title, onPress, loading = false, hasShadow = true }: ButtonProps) => {
+const Button = ({ buttonStyle, textStyle, title, onPress, loading = false, hasShadow = true, disabled = false }: ButtonProps) => {
 
     const shadowStyle = {
         shadowColor: theme.colors.dark,
@@ -29,7 +30,11 @@ const Button = ({ buttonStyle, textStyle, title, onPress, loading = false, hasSh
             <Loading />
         </View>
     }
-
+    if (disabled) {
+        return <Pressable style={[styles.disabledButton, hasShadow && shadowStyle]}>
+            <Text style={[styles.text, textStyle]}>{title}</Text>
+        </Pressable>
+    }
     return <Pressable onPress={onPress} style={[styles.button, buttonStyle, hasShadow && shadowStyle]}>
         <Text style={[styles.text, textStyle]}>{title}</Text>
     </Pressable>
@@ -45,9 +50,21 @@ const styles = StyleSheet.create({
         borderCurve: "continuous",
         borderRadius: theme.radius.xl
     },
+    disabledButton: {
+        backgroundColor: theme.colors.gray,
+        height: hp(6.6),
+        justifyContent: "center",
+        alignItems: "center",
+        borderCurve: "continuous",
+        borderRadius: theme.radius.xl
+    },
     text: {
         fontSize: hp(2.5),
-        color: "white",
+        color: "white"
+    },
+    disabledText: {
+        fontSize: hp(2.5),
+        color: theme.colors.textDark,
     }
 })
 

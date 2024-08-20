@@ -7,10 +7,10 @@ import { StyleSheet, TextInput, View } from "react-native"
 
 type InputProps = {
     containerStyles?: any
+    value: string
     icon: any
-    inputRef: any
     placeholder: string
-    onChangeText: () => void
+    onChangeText: (text: string) => void
     secureTextEntry?: boolean
     keyboardType?: "default" | "email-address"
 }
@@ -23,8 +23,8 @@ const Input = (props: InputProps) => {
         }
         <TextInput
             style={{ flex: 1 }}
+            value={props.value}
             placeholderTextColor={theme.colors.textLight}
-            ref={props.inputRef && props.inputRef}
             placeholder={props.placeholder}
             keyboardType={props.keyboardType ? props.keyboardType : "default"}
             onChangeText={props.onChangeText}

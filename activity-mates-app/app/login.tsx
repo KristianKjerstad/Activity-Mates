@@ -37,8 +37,8 @@ const Login = () => {
 
             <View style={styles.form}>
                 <Text style={{ fontSize: hp(1.5), color: theme.colors.text }}>Please log in to continue</Text>
-                <Input icon={mailIcon} inputRef={emailRef} placeholder="Enter your email" onChangeText={() => { }} keyboardType="email-address" />
-                <Input icon={lockIcon} secureTextEntry inputRef={passwordRef} placeholder="Enter your password" onChangeText={() => { }} />
+                <Input icon={mailIcon} placeholder="Enter your email" onChangeText={() => { }} keyboardType="email-address" />
+                <Input icon={lockIcon} secureTextEntry placeholder="Enter your password" onChangeText={() => { }} />
                 <Text style={styles.forgotPassword}>Forgot password</Text>
                 <Button title="Log In" loading={loading} onPress={onSubmit} />
             </View>

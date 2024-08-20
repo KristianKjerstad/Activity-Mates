@@ -6,26 +6,61 @@ import Input from "@/components/Input"
 import { ScreenWrapper } from "@/components/ScreenWrapper"
 import { theme } from "@/constants/theme"
 import { hp, wp } from "@/helpers/common"
+import { supabase } from "@/lib/supabase"
 import { useRouter } from "expo-router"
 import { useRef, useState } from "react"
-import { Pressable, StatusBar, StyleSheet, Text, TextInput, View } from "react-native"
+import { Alert, Pressable, StatusBar, StyleSheet, Text, TextInput, View } from "react-native"
 
 
 const SignUp = () => {
 
     const router = useRouter()
-    const emailRef = useRef("")
-    const passwordRef = useRef("")
-    const nameRef = useRef("")
+    const [name, setName] = useState<string>("")
+    const [email, setEmail] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
 
     const mailIcon = <Icon name="mail" width={26} height={26} strokeWidth={1.6} />
     const lockIcon = <Icon name="lock" width={26} height={26} strokeWidth={1.6} />
     const userIcon = <Icon name="user" width={26} height={26} strokeWidth={1.6} />
 
+    const isValidForm = email && password && name
 
     // TODO use react form and zod for valdiation
-    const onSubmit = () => {
+    const onSubmit = async () => {
+        if (!isValidForm) {
+            Alert.alert("Sign Up", "Please fill in all required fields")
+            return
+        }
+        setLoading(true)
+        await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    name: name
+                }
+            }
+        })
+            .then((response) => {
+                if (response.error) {
+                    throw new Error(response.error.message)
+                }
+            })
+            .catch((error) => {
+                console.log("error ", error)
+                Alert.alert("Sign Up", error.message)
+            })
+            .finally(() => {
+                setLoading(false)
+                setEmail("")
+                setPassword("")
+                setName("")
+            })
+
+
+
+
 
     }
 
@@ -40,10 +75,10 @@ const SignUp = () => {
 
             <View style={styles.form}>
                 <Text style={{ fontSize: hp(1.5), color: theme.colors.text }}>Please fill in your details</Text>
-                <Input icon={userIcon} inputRef={nameRef} placeholder="Enter your name" onChangeText={() => { }} />
-                <Input icon={mailIcon} inputRef={emailRef} placeholder="Enter your email" onChangeText={() => { }} keyboardType="email-address" />
-                <Input icon={lockIcon} secureTextEntry inputRef={passwordRef} placeholder="Enter your password" onChangeText={() => { }} />
-                <Button title="Sign Up" loading={loading} onPress={onSubmit} />
+                <Input icon={userIcon} value={name} placeholder="Enter your name" onChangeText={(text: string) => { setName(text) }} />
+                <Input icon={mailIcon} value={email} placeholder="Enter your email" onChangeText={(text: string) => { setEmail(text) }} keyboardType="email-address" />
+                <Input icon={lockIcon} value={password} secureTextEntry placeholder="Enter your password" onChangeText={(text: string) => { setPassword(text) }} />
+                <Button disabled={!isValidForm} title="Sign Up" loading={loading} onPress={onSubmit} />
             </View>
 
             <View style={styles.footer}>
