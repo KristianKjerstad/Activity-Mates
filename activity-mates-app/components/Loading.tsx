@@ -3,7 +3,7 @@ import { ActivityIndicator, Text, View } from "react-native";
 
 
 
-const Loading = ({ size = "large", color = theme.colors.primary }: { size: number | "large" | "small" | undefined, color: string }) => {
+const Loading = ({ size = "large", color = theme.colors.primary }: { size?: number | "large" | "small", color?: string }) => {
 
     return <View style={{ justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size={size} color={color} />
