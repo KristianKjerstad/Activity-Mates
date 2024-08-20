@@ -15,8 +15,8 @@ import { Alert, Pressable, StatusBar, StyleSheet, Text, TextInput, View } from "
 const Login = () => {
 
     const router = useRouter()
-    const [email, setEmail] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
+    const [email, setEmail] = useState<string>("t@t.com")
+    const [password, setPassword] = useState<string>("tttttt")
     const [loading, setLoading] = useState<boolean>(false)
 
     const isValidForm = email && password

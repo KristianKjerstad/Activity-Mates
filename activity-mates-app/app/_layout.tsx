@@ -1,7 +1,8 @@
 import Button from "@/components/Button"
-import { AuthProvider } from "@/context/AuthContext"
+import { AuthProvider, TUser } from "@/context/AuthContext"
 import { useAuth } from "@/hooks/useAuth"
 import { supabase } from "@/lib/supabase"
+import { getUserData } from "@/services/userService"
 import { Stack, useRouter } from "expo-router"
 import { useEffect } from "react"
 import { Alert } from "react-native"
@@ -19,14 +20,23 @@ const _layout = () => {
 
 const MainLayout = () => {
 
-    const { setAuth, } = useAuth()
+    const { setAuth, setUserData } = useAuth()
 
     const router = useRouter()
+
+    const updateuserData = async (user: TUser) => {
+        let res = await getUserData(user.id)
+        if (res.success) {
+            setUserData
+        }
+
+    }
 
     useEffect(() => {
         supabase.auth.onAuthStateChange((_event, session) => {
             if (session && session.user) {
-                setAuth(session.user)
+                setAuth(session.user as TUser)
+                updateuserData(session.user)
                 router.replace("/home")
             }
             else {

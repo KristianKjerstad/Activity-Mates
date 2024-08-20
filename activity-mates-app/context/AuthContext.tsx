@@ -49,30 +49,41 @@ export interface UserMetadata {
 }
 
 
+type TUserMetadata = {
+    address: string | null
+    bio: string | null
+    created_at: string
+    id: string
+    image: string | null
+    name: string
+    phone_number: string | null
+}
+
 
 type TAuthContext = {
     user: TUser | null
     setAuth: (user: TUser | null) => void
-    setUserData: (user: TUser) => void
+    setUserData: (user: TUserMetadata) => void
 }
 
 export const AuthContext = createContext<TAuthContext>({
     user: null,
     setAuth: (user: TUser | null) => { },
-    setUserData: (user: TUser) => { }
+    setUserData: (user: TUserMetadata) => { }
 })
 
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
 
     const [user, setUser] = useState<TUser | null>(null)
+    const [userMetaData, setUserMetaData] = useState<TUserMetadata | null>(null)
 
     const setAuth = (authuser: TUser | null) => {
         setUser(authuser)
     }
 
-    const setUserData = (userData: TUser) => {
-        setUser({ ...userData })
+    const setUserData = (userData: TUserMetadata) => {
+        setUserMetaData(userData)
     }
 
     return <AuthContext.Provider value={{
