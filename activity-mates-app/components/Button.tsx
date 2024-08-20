@@ -5,8 +5,8 @@ import Loading from "./Loading"
 
 
 type ButtonProps = {
-    buttonStyle: any
-    textStyle: string
+    buttonStyle?: any
+    textStyle?: string
     title: string
     onPress: () => void,
     loading?: boolean,

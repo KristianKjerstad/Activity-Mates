@@ -45,7 +45,7 @@ const Login = () => {
 
             <View style={styles.footer}>
                 <Text style={styles.footerText}>Don't have an account?</Text>
-                <Pressable>
+                <Pressable onPress={() => router.push("/signUp")}>
                     <Text style={[styles.footerText, styles.signUp]}>Sign Up</Text>
                 </Pressable>
             </View>
