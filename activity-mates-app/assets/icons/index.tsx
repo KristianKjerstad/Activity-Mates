@@ -23,6 +23,7 @@ import Logout from './logout';
 import Image from './Image';
 import Video from './Video';
 
+
 const icons = {
     home: Home,
     mail: Mail,
@@ -35,29 +36,36 @@ const icons = {
     call: Call,
     camera: Camera,
     edit: Edit,
-    arrowLeft: ArrowLeft,
-    threeDotsCircle: ThreeDotsCircle,
-    threeDotsHorizontal: ThreeDotsHorizontal,
-    comment: Comment,
-    share: Share,
-    send: Send,
-    delete: Delete,
-    logout: Logout,
-    image: Image,
-    video: Video,
+    // arrowLeft: ArrowLeft,
+    // threeDotsCircle: ThreeDotsCircle,
+    // threeDotsHorizontal: ThreeDotsHorizontal,
+    // comment: Comment,
+    // share: Share,
+    // send: Send,
+    // delete: Delete,
+    // logout: Logout,
+    // image: Image,
+    // video: Video,
 }
 
-const Icon = ({name, ...props}) => {
-    const IconComponent = icons[name];
-  return (
-    <IconComponent
-        height={props.size || 24}
-        width={props.size || 24}
-        strokeWidth={props.strokeWidth || 1.9}
-        color={theme.colors.textLight}
-        {...props}
-    />
-  )
+
+
+type IconProps = {
+    name: "home" | "mail" | "lock" | "user" | "heart" | "plus" | "search" | "location" | "call" | "camera" | "edit"
+    height?: number
+    strokeWidth?: number,
+    color?: string,
+    width?: number
 }
 
-export default Icon;
+
+
+const Icon = (props: IconProps) => {
+    const { name, width, height, strokeWidth, color } = props
+    const IconComponent = icons[name]
+
+
+    return <IconComponent height={height ?? 24} width={width ?? 24} strokeWidth={strokeWidth ?? 1.9} color={color ?? theme.colors.textLight} />
+}
+
+export default Icon
