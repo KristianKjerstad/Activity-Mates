@@ -36,7 +36,7 @@ const icons = {
     call: Call,
     camera: Camera,
     edit: Edit,
-    // arrowLeft: ArrowLeft,
+    arrowLeft: ArrowLeft,
     // threeDotsCircle: ThreeDotsCircle,
     // threeDotsHorizontal: ThreeDotsHorizontal,
     // comment: Comment,
@@ -51,7 +51,7 @@ const icons = {
 
 
 type IconProps = {
-    name: "home" | "mail" | "lock" | "user" | "heart" | "plus" | "search" | "location" | "call" | "camera" | "edit"
+    name: "home" | "mail" | "lock" | "user" | "heart" | "plus" | "search" | "location" | "call" | "camera" | "edit" | "arrowLeft"
     height?: number
     strokeWidth?: number,
     color?: string,
