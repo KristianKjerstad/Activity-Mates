@@ -7,6 +7,8 @@ import Button from "@/components/Button"
 
 
 const Welcome = () => {
+
+    const router = useRouter()
     return (
         <ScreenWrapper bg="white">
             <StatusBar barStyle={"dark-content"} />
@@ -20,7 +22,7 @@ const Welcome = () => {
                 <View style={styles.footer}>
                     <Button
                         title="Getting started"
-                        onPress={() => { }}
+                        onPress={() => { router.push("/signUp") }}
                         buttonStyle={{ marignHorizontal: wp(3) }}
                         textStyle=""
 
@@ -31,7 +33,7 @@ const Welcome = () => {
                         <Text style={styles.loginText}>
                             Already have an account!
                         </Text>
-                        <Pressable>
+                        <Pressable onPress={() => { router.push("/login") }}>
                             <Text style={[styles.loginText, { color: theme.colors.primaryDark, fontWeight: theme.fonts.semibold }]}>
                                 Login
                             </Text>
