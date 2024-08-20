@@ -49,9 +49,11 @@ const icons = {
 }
 
 
+export type TIconName = "home" | "mail" | "lock" | "user" | "heart" | "plus" | "search" | "location" | "call" | "camera" | "edit" | "arrowLeft"
+
 
 type IconProps = {
-    name: "home" | "mail" | "lock" | "user" | "heart" | "plus" | "search" | "location" | "call" | "camera" | "edit" | "arrowLeft"
+    name: TIconName
     height?: number
     strokeWidth?: number,
     color?: string,
