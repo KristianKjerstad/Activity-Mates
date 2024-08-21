@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Django",
+      "type": "python",
+      "request": "launch",
+      "program": "backend/activitymatesapi/manage.py",
+      "args": [
+        "runserver"
+      ],
+      "envFile": "backend/.env",
+      "django": true,
+      "justMyCode": false
+    },
+  ]
+}

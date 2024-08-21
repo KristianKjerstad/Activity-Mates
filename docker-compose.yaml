@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ./backend
+      args:
+        VERSION: ${VERSION}
+    image: api
+    # restart: unless-stopped
+    volumes:
+      - ./backend/activitymatesapi:/app
+    env_file:
+      - backend/.env
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+
+
+  db:
+    image: postgres:16.4-bullseye
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=development
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=citus
+
+volumes:
+  postgres_data:
