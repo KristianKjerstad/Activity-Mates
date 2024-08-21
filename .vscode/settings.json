@@ -7,6 +7,8 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
+  "python.defaultInterpreterPath": "${workspaceRoot}/backend/.venv/bin/python3",
+  // "python.languageServer": "Pylance",
   // "black-formatter.args": ["--config", "pyproject.toml"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {

@@ -30,3 +30,11 @@ Download the app on your phone, to be able to run WITHOUT the expo server.
 
 ## Other
 * To add a device to expo, run `eas device:create` (requires apple developer account)
+
+
+
+
+# Backend
+* REST API with Django and Django Ninja
+* Automatic API documentation generation
+* Architecture:  Repository pattern with services. All business logic is separated out into services, and data fetching is only done through repository classes.   
