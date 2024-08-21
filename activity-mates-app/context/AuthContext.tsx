@@ -49,6 +49,8 @@ export interface UserMetadata {
 }
 
 
+
+// same data as found in user database table
 type TUserMetadata = {
     address: string | null
     bio: string | null
@@ -62,12 +64,14 @@ type TUserMetadata = {
 
 type TAuthContext = {
     user: TUser | null
+    userMetaData: TUserMetadata | null
     setAuth: (user: TUser | null) => void
     setUserData: (user: TUserMetadata) => void
 }
 
 export const AuthContext = createContext<TAuthContext>({
     user: null,
+    userMetaData: null,
     setAuth: (user: TUser | null) => { },
     setUserData: (user: TUserMetadata) => { }
 })
@@ -88,6 +92,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
     return <AuthContext.Provider value={{
         user,
+        userMetaData,
         setAuth,
         setUserData
     }
