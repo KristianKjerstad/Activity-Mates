@@ -40,6 +40,10 @@ Download the app on your phone, to be able to run WITHOUT the expo server.
 * Architecture:  Repository pattern with services. All business logic is separated out into services, and data fetching is only done through repository classes.   
 
 
+## Generate Typescript client from API
+* API documentation is available at `http://localhost:8000/api/docs#/default/apitemplate_api_hello`.
+Open API generator is set up to generate typescript code from the openapi file, by running the script`generate-api-typescript-client.sh`.
+
 ## User sign up
 Supabase is used to handle auth.
 A trigger is added to the user table, so that each time a user signs up, a new user is added to the public.users table (defined with the Django model User).
