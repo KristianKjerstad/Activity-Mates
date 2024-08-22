@@ -14,8 +14,8 @@ class User(models.Model):
     country = models.CharField(max_length=250, default="")
     city =  models.CharField(max_length=250, default="")
     date_of_birth = models.DateField()
-    groups = models.ManyToManyField('Group', through='GroupMembership')
-    events = models.ManyToManyField('Events', through='EventRegistration')
+    groups = models.ManyToManyField('Group', through='GroupMembership', blank=True)
+    events = models.ManyToManyField('Events', through='EventRegistration', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

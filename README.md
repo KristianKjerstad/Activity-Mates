@@ -38,3 +38,33 @@ Download the app on your phone, to be able to run WITHOUT the expo server.
 * REST API with Django and Django Ninja
 * Automatic API documentation generation
 * Architecture:  Repository pattern with services. All business logic is separated out into services, and data fetching is only done through repository classes.   
+
+
+## User sign up
+Supabase is used to handle auth.
+A trigger is added to the user table, so that each time a user signs up, a new user is added to the public.users table (defined with the Django model User).
+
+```sql
+drop trigger if exists on_auth_user_created on auth.users;
+drop function if exists handle_new_user;
+
+-- inserts a row into public.users
+create function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer set search_path = ''
+as $$
+begin
+  insert into public.users (id, full_name, email, phone_number, country, city, date_of_birth, created_at)
+  values (new.id, new.raw_user_meta_data ->> 'full_name', new.raw_user_meta_data ->> 'email',  new.raw_user_meta_data ->> 'phone_number', new.raw_user_meta_data ->> 'country', new.raw_user_meta_data ->> 'city', (new.raw_user_meta_data ->> 'date_of_birth')::DATE, NOW());
+  return new;
+end;
+$$;
+
+-- trigger the function every time a user is created
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+
+```
+

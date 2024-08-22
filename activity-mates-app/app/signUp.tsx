@@ -1,5 +1,4 @@
 import Icon from "@/assets/icons"
-import Home from "@/assets/icons/Home"
 import { BackButton } from "@/components/BackButton"
 import Button from "@/components/Button"
 import Input from "@/components/Input"
@@ -8,20 +7,27 @@ import { theme } from "@/constants/theme"
 import { hp, wp } from "@/helpers/common"
 import { supabase } from "@/lib/supabase"
 import { useRouter } from "expo-router"
-import { useRef, useState } from "react"
-import { Alert, Pressable, StatusBar, StyleSheet, Text, TextInput, View } from "react-native"
+import { useState } from "react"
+import { Alert, Pressable, StatusBar, StyleSheet, Text, View } from "react-native"
 
 
 const SignUp = () => {
 
     const router = useRouter()
-    const [name, setName] = useState<string>("")
-    const [email, setEmail] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
+    const [name, setName] = useState<string>("test1")
+    const [email, setEmail] = useState<string>("test@test.com")
+    const [password, setPassword] = useState<string>("asdfasdf")
+    const [phoneNumber, setPhoneNumber] = useState<string>("123123123")
+    const [country, setCountry] = useState<string>("Norway")
+    const [city, setCity] = useState<string>("Trondheim")
+    const [dateOfBirth, setDateOfBirth] = useState<string>("1998-03-03") // yyyy-mm-dd 
+
     const [loading, setLoading] = useState<boolean>(false)
 
     const mailIcon = <Icon name="mail" width={26} height={26} strokeWidth={1.6} />
     const lockIcon = <Icon name="lock" width={26} height={26} strokeWidth={1.6} />
+
+    const phoneIcon = <Icon name="camera" width={26} height={26} strokeWidth={1.6} />
     const userIcon = <Icon name="user" width={26} height={26} strokeWidth={1.6} />
 
     const isValidForm = email && password && name
@@ -38,7 +44,12 @@ const SignUp = () => {
             password: password,
             options: {
                 data: {
-                    name: name
+                    full_name: name,
+                    email: email,
+                    phone_number: phoneNumber,
+                    country: country,
+                    city: city,
+                    date_of_birth: dateOfBirth
                 }
             }
         })
@@ -79,6 +90,8 @@ const SignUp = () => {
                 <Input icon={userIcon} value={name} placeholder="Enter your name" onChangeText={(text: string) => { setName(text) }} />
                 <Input icon={mailIcon} value={email} placeholder="Enter your email" onChangeText={(text: string) => { setEmail(text) }} keyboardType="email-address" />
                 <Input icon={lockIcon} value={password} secureTextEntry placeholder="Enter your password" onChangeText={(text: string) => { setPassword(text) }} />
+                <Input icon={phoneIcon} value={phoneNumber} placeholder="Enter your phone number" onChangeText={(text: string) => { setPhoneNumber(text) }} />
+
                 <Button disabled={!isValidForm} title="Sign Up" loading={loading} onPress={onSubmit} />
             </View>
 

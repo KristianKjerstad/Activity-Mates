@@ -1,11 +1,9 @@
-import Button from "@/components/Button"
 import { AuthProvider, TUser } from "@/context/AuthContext"
 import { useAuth } from "@/hooks/useAuth"
 import { supabase } from "@/lib/supabase"
 import { getUserData } from "@/services/userService"
 import { Stack, useRouter } from "expo-router"
 import { useEffect } from "react"
-import { Alert } from "react-native"
 
 
 const _layout = () => {
