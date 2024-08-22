@@ -1,21 +1,29 @@
-import { ScreenWrapper } from "@/components/ScreenWrapper";
-import { theme } from "@/constants/theme";
-import { hp, wp } from "@/helpers/common";
-import { Image, StyleSheet, Text, View } from "react-native";
-import PaddedContainer from "./PaddedContainer";
-import Input from "@/components/Input";
 import Icon from "@/assets/icons";
 import Button from "@/components/Button";
+import Input from "@/components/Input";
+import { theme } from "@/constants/theme";
+import { hp, wp } from "@/helpers/common";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/lib/supabase";
+import { useState } from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
+import PaddedContainer from "./PaddedContainer";
 
 
 export function ProfileScreen() {
 
     const { userMetaData, user } = useAuth()
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
 
     const addressIcon = <Icon name="location" width={26} height={26} strokeWidth={1.6} />
     const emailIcon = <Icon name="mail" width={26} height={26} strokeWidth={1.6} />
+
+    const handleSignOut = async () => {
+        setIsLoading(true)
+        await supabase.auth.signOut()
+        setIsLoading(false)
+    }
 
     return (
         <PaddedContainer>
@@ -32,7 +40,7 @@ export function ProfileScreen() {
             </View>
             <View style={styles.footer}>
 
-                <Button title="Sign Out" onPress={() => { }} buttonStyle={{ width: wp(60) }} />
+                <Button title="Sign Out" onPress={handleSignOut} loading={isLoading} buttonStyle={{ width: wp(60) }} />
             </View>
         </PaddedContainer >
     );
