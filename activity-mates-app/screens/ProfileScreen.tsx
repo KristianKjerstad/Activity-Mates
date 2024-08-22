@@ -1,9 +1,11 @@
 import Icon from "@/assets/icons";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
+import Loading from "@/components/Loading";
 import { theme } from "@/constants/theme";
 import { hp, wp } from "@/helpers/common";
 import { useAuth } from "@/hooks/useAuth";
+import { useUser } from "@/hooks/useUsers";
 import { supabase } from "@/lib/supabase";
 import { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
@@ -12,9 +14,9 @@ import PaddedContainer from "./PaddedContainer";
 
 export function ProfileScreen() {
 
-    const { userMetaData, user } = useAuth()
+    const { user: userData } = useAuth()
     const [isLoading, setIsLoading] = useState<boolean>(false)
-
+    const { user, isLoadingUser } = useUser(userData?.id)
 
     const addressIcon = <Icon name="location" width={26} height={26} strokeWidth={1.6} />
     const emailIcon = <Icon name="mail" width={26} height={26} strokeWidth={1.6} />
@@ -24,18 +26,22 @@ export function ProfileScreen() {
         await supabase.auth.signOut()
         setIsLoading(false)
     }
-
+    if (isLoadingUser) {
+        return <Loading />
+    }
     return (
         <PaddedContainer>
             <View>
                 <Text style={styles.headerText}>Profile</Text>
                 <Image style={styles.profileImage} source={require("../assets/images/avatar.png")} />
-                <Text style={styles.nameText}>{userMetaData?.name ?? "No name found..."}</Text>
+                <Text style={styles.nameText}>{user?.full_name ?? "No name found..."}</Text>
             </View>
             <View style={styles.profileInfoContainer}>
-                <Input icon={addressIcon} value={userMetaData?.address ?? "No address"} containerStyles={{ width: wp(80) }} />
                 <Input icon={emailIcon} value={user?.email ?? "No email"} containerStyles={{ width: wp(80) }} />
-                <Input icon={emailIcon} value={"Birthday"} containerStyles={{ width: wp(80) }} />
+                <Input value={user?.phone_number ?? "No phone number"} containerStyles={{ width: wp(80) }} />
+                <Input value={user?.date_of_birth} containerStyles={{ width: wp(80) }} />
+                <Input value={`${user?.city}, ${user?.country}`} containerStyles={{ width: wp(80) }} />
+
 
             </View>
             <View style={styles.footer}>

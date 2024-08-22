@@ -1,5 +1,4 @@
 import Icon from "@/assets/icons"
-import Home from "@/assets/icons/Home"
 import { BackButton } from "@/components/BackButton"
 import Button from "@/components/Button"
 import Input from "@/components/Input"
@@ -8,15 +7,15 @@ import { theme } from "@/constants/theme"
 import { hp, wp } from "@/helpers/common"
 import { supabase } from "@/lib/supabase"
 import { useRouter } from "expo-router"
-import { useRef, useState } from "react"
-import { Alert, Pressable, StatusBar, StyleSheet, Text, TextInput, View } from "react-native"
+import { useState } from "react"
+import { Alert, Pressable, StatusBar, StyleSheet, Text, View } from "react-native"
 
 
 const Login = () => {
 
     const router = useRouter()
-    const [email, setEmail] = useState<string>("t@t.com")
-    const [password, setPassword] = useState<string>("tttttt")
+    const [email, setEmail] = useState<string>("test@test.com")
+    const [password, setPassword] = useState<string>("asdfasdf")
     const [loading, setLoading] = useState<boolean>(false)
 
     const isValidForm = email && password

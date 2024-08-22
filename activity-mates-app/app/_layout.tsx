@@ -2,16 +2,21 @@ import { AuthProvider, TUser } from "@/context/AuthContext"
 import { useAuth } from "@/hooks/useAuth"
 import { supabase } from "@/lib/supabase"
 import { getUserData } from "@/services/userService"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Stack, useRouter } from "expo-router"
 import { useEffect } from "react"
 
 
+const queryClient = new QueryClient()
+
 const _layout = () => {
 
     return (
-        <AuthProvider>
-            <MainLayout />
-        </AuthProvider>
+        <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+                <MainLayout />
+            </AuthProvider>
+        </QueryClientProvider>
     )
 }
 
