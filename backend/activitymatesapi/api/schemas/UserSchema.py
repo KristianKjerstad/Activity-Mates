@@ -1,4 +1,5 @@
 
+import string
 from typing import List
 from uuid import UUID
 from api.models import User
@@ -7,10 +8,17 @@ from ninja import ModelSchema
 class UserSchema(ModelSchema):
     groups: List[UUID]
     events: List[UUID]
+    id: UUID
+    full_name: str
+    phone_number: str
+    email: str
+    country: str
+    city: str
 
+    
     class Meta:
         model = User
-        fields = ["id", "full_name", "phone_number", "email", "country", "city", "date_of_birth", "created_at", ]
+        fields = ["id", "full_name", "phone_number", "email", "country", "city", "date_of_birth", "created_at" ]
 
     @staticmethod
     def from_model(user: User):
@@ -28,6 +36,14 @@ class UserSchema(ModelSchema):
         )
 
 class CreateUserSchema(ModelSchema):
+    groups: List[UUID]
+    events: List[UUID]
+    id: UUID
+    full_name: str
+    phone_number: str
+    email: str
+    country: str
+    city: str
     class Meta:
         model = User
         fields = ["full_name", "phone_number", "email", "country", "city", "date_of_birth"]

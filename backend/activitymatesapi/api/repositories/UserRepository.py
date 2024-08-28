@@ -26,11 +26,11 @@ class UserRepository(Repository):
         return UserSchema.from_model(user)
     
 
-    def delete(self, id: UUID):
+    def delete(self, id: UUID) -> None:
         user = get_object_or_404(User, id=id)
         user.delete()
 
-    def create(self, new_user: CreateUserSchema):
+    def create(self, new_user: CreateUserSchema) -> UserSchema:
         user = User.objects.create(
             full_name=new_user.full_name,
             phone_number = new_user.phone_number,
@@ -39,11 +39,11 @@ class UserRepository(Repository):
             city = new_user.city,
             date_of_birth = new_user.date_of_birth
         )
-        return UserSchema.from_orm(user)
+        return UserSchema.from_model(user)
 
 
 
-    def update(self, id: UUID, new_user: UserSchema):
+    def update(self, id: UUID, new_user: UserSchema) -> UserSchema:
         user = get_object_or_404(User, id=id)
 
         user.full_name = new_user.full_name
@@ -52,9 +52,9 @@ class UserRepository(Repository):
         user.country = new_user.country
         user.city = new_user.city
         user.date_of_birth = new_user.date_of_birth
-        user.groups = new_user.groups
-        user.events = new_user.events
+        user.groups.set(new_user.groups)
+        user.events.set(new_user.events)
         user.save()
-        return UserSchema.from_orm(user)
+        return UserSchema.from_model(user)
 
 

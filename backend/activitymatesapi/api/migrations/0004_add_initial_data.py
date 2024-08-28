@@ -1,6 +1,8 @@
 from django.db import migrations, models
 import uuid
 
+from api.models import AgeIntervalEnum
+
 def add_initial_data(apps, schema_editor):
     # Get models
     Category = apps.get_model('api', 'Category')
@@ -18,7 +20,7 @@ def add_initial_data(apps, schema_editor):
     volleyball_group = Group.objects.create(
         id=uuid.uuid4(),
         name="Volleyball Lovers",
-        age_interval="18-35",
+        age_interval=AgeIntervalEnum.C,
         country="USA",
         city="New York",
         category=volleyball_category
@@ -27,7 +29,7 @@ def add_initial_data(apps, schema_editor):
     football_group = Group.objects.create(
         id=uuid.uuid4(),
         name="Football Fans",
-        age_interval="18-50",
+        age_interval=AgeIntervalEnum.B,
         country="USA",
         city="Los Angeles",
         category=football_category
