@@ -23,7 +23,7 @@ def get_all_users(request):
 
 @router.get("/{id}", response=UserSchema)
 def get_user(request, id: UUID):
-    user = user_service.get_user(id=id)
+    user: UserSchema = user_service.get_user(id=id)
     return user
 
 

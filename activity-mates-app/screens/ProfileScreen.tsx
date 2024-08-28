@@ -16,7 +16,7 @@ export function ProfileScreen() {
 
     const { user: userData } = useAuth()
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { user, isLoadingUser } = useUser(userData?.id)
+    const { user, isLoadingUser } = useUser(userData?.id ?? "")
 
     const addressIcon = <Icon name="location" width={26} height={26} strokeWidth={1.6} />
     const emailIcon = <Icon name="mail" width={26} height={26} strokeWidth={1.6} />

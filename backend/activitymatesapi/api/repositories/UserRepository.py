@@ -16,12 +16,14 @@ class UserRepository(Repository):
 
     def get_all(self) -> list[UserSchema]:
         users = User.objects.all()
-        return [UserSchema.from_orm(user) for user in users]
+        return [UserSchema.from_model(user) for user in users]
     
 
-    def get(self, id: UUID) -> UserSchema:
+    def get(self, id: UUID, resolve_data=False) -> UserSchema:
         user = get_object_or_404(User, id=id)
-        return UserSchema.from_orm(user)
+        if (resolve_data):
+            raise NotImplementedError
+        return UserSchema.from_model(user)
     
 
     def delete(self, id: UUID):
